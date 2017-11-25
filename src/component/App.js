@@ -18,16 +18,14 @@ class App extends React.Component {
   }
 
   getRandomInt = (min, max) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
+    return Math.random() * (max - min) + min;
   };
 
   updateTicker = () => {
     const data = [
-      ['shld', this.getRandomInt(100, 200)],
-      ['yhoo', this.getRandomInt(10, 50)],
-      ['evi', this.getRandomInt(10, 100)]
+      ['shld', this.getRandomInt(100.44, 200.56)],
+      ['yhoo', this.getRandomInt(10.56, 50.33)],
+      ['evi', this.getRandomInt(10.78, 100.23)]
     ];
 
     this.props.actions.fetchTickerData(data);
@@ -39,7 +37,7 @@ class App extends React.Component {
         {(() => {
           if (this.props.tickerData) {
             return ([
-              <table cellPadding="0" cellSpacing="0">
+              <table cellPadding="0" cellSpacing="0" key="tickerTable">
                 <tbody>
                   <tr className="ticker__row">
                     <th>Name</th>
@@ -59,7 +57,7 @@ class App extends React.Component {
                   }
                 </tbody>
               </table>,
-              <div className="tickerInfo">
+              <div className="tickerInfo" key="tickerInfo">
                 <button onClick={this.updateTicker}>Update</button>
                 <div className="tickerInfo__container">
                   <div className="tickerInfo__update tickerInfo__update--noChange" /> No Change
