@@ -1,0 +1,1 @@
+export const FETCH_TINKER_DATA = 'FETCH_TINKER_DATA';
