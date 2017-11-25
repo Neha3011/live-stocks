@@ -1,0 +1,15 @@
+{
+  "name": "live-stocks",
+  "version": "1.0.0",
+  "description": "Returns live stock",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "keywords": [
+    "live",
+    "stocks"
+  ],
+  "author": "Neha Singh",
+  "license": "ISC"
+}
