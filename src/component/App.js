@@ -13,6 +13,10 @@ class App extends React.Component {
 
   componentDidMount() {
     this.updateTicker();
+    const intervalSeconds = parseInt(this.getRandomTickerValue(1000, 3000), 10);
+    this.interval = setInterval(() => {
+      this.updateTicker();
+    }, intervalSeconds);
   }
 
   componentWillUnmount() {
@@ -39,11 +43,6 @@ class App extends React.Component {
     }
     showTickerRow = false;
     this.props.actions.fetchTickerData(data);
-
-    const intervalSeconds = parseInt(this.getRandomTickerValue(1000, 3000), 10);
-    this.interval = setInterval(() => {
-      this.updateTicker();
-    }, intervalSeconds);
   };
 
   render() {
