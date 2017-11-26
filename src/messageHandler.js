@@ -12,7 +12,7 @@ export const listenAndProcessTickerQueue = (socket, store) => {
 
   socket.on('messages', (data) => {
     store.dispatch({
-      'type': types.FETCH_TINKER_DATA,
+      'type': types.FETCH_TICKER_DATA,
       data
     });
   });

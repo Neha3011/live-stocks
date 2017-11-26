@@ -8,7 +8,7 @@ const initialState = fromJS({
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case types.FETCH_TINKER_DATA:
+    case types.FETCH_TICKER_DATA:
       return state.mergeIn(['tickerData'], normalizerTickerData(state.get('tickerData').toJSON(), action.data));
 
     default:

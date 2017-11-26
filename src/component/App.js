@@ -2,15 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import moment from 'moment';
 import tickerActions from '../actions/ticker';
+
+import Header from './Header';
+import TickerContainer from './TickerContainer';
 
 let showTickerRow = true;
 class App extends React.Component {
   interval;
 
   componentDidMount() {
-    const intervalSeconds = parseInt(this.getRandomTickerValue(1000, 2000));
+    const intervalSeconds = parseInt(this.getRandomTickerValue(1000, 2000), 10);
     this.interval = setInterval(() => {
       this.updateTicker();
     }, intervalSeconds);
@@ -45,49 +47,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="ticker">
-        <div className="ticker__header">
-          <div className="ticker__header__name">
-            Live Stocks Demo
-          </div>
-        </div>
+        <Header />
         {(() => {
           if (this.props.tickerData) {
             return (
-                <div className="ticker__container">
-                  <table cellPadding="0" cellSpacing="0">
-                    <tbody>
-                    <tr className="ticker__row">
-                      <th>Name</th>
-                      <th>Price</th>
-                      <th>Last updated</th>
-                    </tr>
-                    {
-                      this.props.tickerData.toArray().map((data) => {
-                        return (
-                            <tr className="ticker__row" key={data.get('name')}>
-                              <td>{data.get('name')}</td>
-                              <td style={{ 'backgroundColor': data.get('backgroundColor'), 'color': data.get('color') }}>
-                                {data.get('price')}
-                              </td>
-                              <td>{moment(data.get('lastUpdated')).fromNow()}</td>
-                            </tr>
-                        );
-                      })
-                    }
-                    </tbody>
-                  </table>
-                  <div className="tickerInfo">
-                    <div className="tickerInfo__container">
-                      <div className="tickerInfo__update tickerInfo__update--noChange" /> No Change
-                    </div>
-                    <div className="tickerInfo__container">
-                      <div className="tickerInfo__update tickerInfo__update--up" /> Increase
-                    </div>
-                    <div className="tickerInfo__container">
-                      <div className="tickerInfo__update tickerInfo__update--down" /> Decrease
-                    </div>
-                  </div>
-                </div>
+              <TickerContainer
+                tickerData={this.props.tickerData}
+              />
             );
           }
         })()}
