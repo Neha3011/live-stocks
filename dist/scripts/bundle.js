@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "149a980ca7d3441aef7d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ecf39e9af3bd78edde5e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -21852,8 +21852,8 @@ __webpack_require__(243);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var socket = (0, _configureSocket2.default)();
-var store = (0, _configureStore2.default)(socket);
-(0, _messageHandler.listenAndProcessTickerQueue)(socket, store);
+var store = (0, _configureStore2.default)();
+(0, _messageHandler.listenAndProcessTickerData)(socket, store);
 
 (0, _reactDom.render)(_react2.default.createElement(
   _reactRedux.Provider,
@@ -41096,7 +41096,8 @@ var App = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var intervalSeconds = parseInt(this.getRandomTickerValue(1000, 2000), 10);
+      this.updateTicker();
+      var intervalSeconds = parseInt(this.getRandomTickerValue(1000, 3000), 10);
       this.interval = setInterval(function () {
         _this2.updateTicker();
       }, intervalSeconds);
@@ -41248,12 +41249,12 @@ var TickerContainer = function TickerContainer(props) {
           _react2.default.createElement(
             'th',
             null,
-            'Name'
+            'Stock Name'
           ),
           _react2.default.createElement(
             'th',
             null,
-            'Price'
+            'Current Price'
           ),
           _react2.default.createElement(
             'th',
@@ -49897,7 +49898,7 @@ module.exports = isEmpty
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listenAndProcessTickerQueue = undefined;
+exports.listenAndProcessTickerData = undefined;
 
 var _ActionTypes = __webpack_require__(20);
 
@@ -49905,9 +49906,8 @@ var types = _interopRequireWildcard(_ActionTypes);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var listenAndProcessTickerQueue = exports.listenAndProcessTickerQueue = function listenAndProcessTickerQueue(socket, store) {
+var listenAndProcessTickerData = exports.listenAndProcessTickerData = function listenAndProcessTickerData(socket, store) {
   socket.on('connect', function () {
-    // TODO Show Connect Status at the top of the page
     console.log('connect');
   });
 

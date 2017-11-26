@@ -22,26 +22,31 @@ body {
 
   .ticker__container {
     display: flex;
-    justify-content: space-around;
-    margin: 40px 130px;
-    .ticker__row {
-      th, td {
-        font-size: 12px;
-        border: 1px solid #F6F6F6;
-        width: 160px;
-        padding: 12px 12px 12px 20px;
-        color: rgba(34, 35, 38, 0.9);
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        text-align: left;
-      }
+    justify-content: center;
+    margin-top: 40px;
 
-      td {
-        font-size: 14px;
-      }
+    table {
+      border-collapse:collapse;
 
-      th {
-        font-weight: bold;
-        text-transform: uppercase;
+      .ticker__row {
+        th, td {
+          font-size: 12px;
+          border: 1px solid #E6E6E6;
+          width: 160px;
+          padding: 12px 12px 12px 20px;
+          color: rgba(34, 35, 38, 0.9);
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          text-align: left;
+        }
+
+        td {
+          font-size: 14px;
+        }
+
+        th {
+          font-weight: bold;
+          text-transform: uppercase;
+        }
       }
     }
 

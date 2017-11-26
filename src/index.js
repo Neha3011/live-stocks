@@ -5,13 +5,13 @@ import App from './component/App';
 
 import configureSocket from './configureSocket';
 import configureStore from './configureStore';
-import { listenAndProcessTickerQueue } from './messageHandler';
+import { listenAndProcessTickerData } from './messageHandler';
 
 import './styles/main.scss';
 
 const socket = configureSocket();
-const store = configureStore(socket);
-listenAndProcessTickerQueue(socket, store);
+const store = configureStore();
+listenAndProcessTickerData(socket, store);
 
 render(
   <Provider store={store}>

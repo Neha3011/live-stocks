@@ -12,7 +12,8 @@ class App extends React.Component {
   interval;
 
   componentDidMount() {
-    const intervalSeconds = parseInt(this.getRandomTickerValue(1000, 2000), 10);
+    this.updateTicker();
+    const intervalSeconds = parseInt(this.getRandomTickerValue(1000, 3000), 10);
     this.interval = setInterval(() => {
       this.updateTicker();
     }, intervalSeconds);

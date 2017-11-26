@@ -7,8 +7,8 @@ const TickerContainer = (props) => {
       <table cellPadding="0" cellSpacing="0">
         <tbody>
           <tr className="ticker__row">
-            <th>Name</th>
-            <th>Price</th>
+            <th>Stock Name</th>
+            <th>Current Price</th>
             <th>Last updated</th>
           </tr>
           {
