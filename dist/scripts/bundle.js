@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ecf39e9af3bd78edde5e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4ab8c1fe1aaaa573a326"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -41088,19 +41088,18 @@ var App = function (_React$Component) {
       }
       showTickerRow = false;
       _this.props.actions.fetchTickerData(data);
+
+      var intervalSeconds = parseInt(_this.getRandomTickerValue(1000, 3000), 10);
+      _this.interval = setInterval(function () {
+        _this.updateTicker();
+      }, intervalSeconds);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(App, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var _this2 = this;
-
       this.updateTicker();
-      var intervalSeconds = parseInt(this.getRandomTickerValue(1000, 3000), 10);
-      this.interval = setInterval(function () {
-        _this2.updateTicker();
-      }, intervalSeconds);
     }
   }, {
     key: 'componentWillUnmount',
@@ -41110,16 +41109,16 @@ var App = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       return _react2.default.createElement(
         'div',
         { className: 'ticker' },
         _react2.default.createElement(_Header2.default, null),
         function () {
-          if (_this3.props.tickerData) {
+          if (_this2.props.tickerData) {
             return _react2.default.createElement(_TickerContainer2.default, {
-              tickerData: _this3.props.tickerData
+              tickerData: _this2.props.tickerData
             });
           }
         }()
