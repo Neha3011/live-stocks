@@ -5,71 +5,90 @@ import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import tickerActions from '../actions/ticker';
 
+let showTickerRow = true;
 class App extends React.Component {
-  componentWillMount() {
-    const data = [
-      ['shld', 115.48604266229276],
-      ['yhoo', 18.827506511543984],
-      ['evi', 34.093290276385595],
-      ['msft', 134.7039343700621]
-    ];
-    // TODO REMOVE THIS WHEN SOCKET IS DONE
-    this.props.actions.fetchTickerData(data);
+  interval;
+
+  componentDidMount() {
+    const intervalSeconds = parseInt(this.getRandomTickerValue(1000, 2000));
+    this.interval = setInterval(() => {
+      this.updateTicker();
+    }, intervalSeconds);
   }
 
-  getRandomInt = (min, max) => {
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  getRandomTickerValue = (min, max) => {
     return Math.random() * (max - min) + min;
   };
 
   updateTicker = () => {
     const data = [
-      ['shld', this.getRandomInt(100.44, 200.56)],
-      ['yhoo', this.getRandomInt(10.56, 50.33)],
-      ['evi', this.getRandomInt(10.78, 100.23)]
+      ['shld', this.getRandomTickerValue(100.44, 200.56)],
+      ['yhoo', this.getRandomTickerValue(10.56, 50.33)],
+      ['evi', this.getRandomTickerValue(10.78, 100.23)],
+      ['aks', this.getRandomTickerValue(10.78, 100.23)],
+      ['ebr', 138.1275844301807],
+      ['intc', this.getRandomTickerValue(10.56, 150.33)],
+      ['tck', this.getRandomTickerValue(10.56, 170.33)]
     ];
 
+    if (showTickerRow) {
+      data.push(['MSFT', this.getRandomTickerValue(10.78, 100.23)]);
+    }
+    showTickerRow = false;
     this.props.actions.fetchTickerData(data);
   };
 
   render() {
     return (
       <div className="ticker">
+        <div className="ticker__header">
+          <div className="ticker__header__name">
+            Live Stocks Demo
+          </div>
+        </div>
         {(() => {
           if (this.props.tickerData) {
-            return ([
-              <table cellPadding="0" cellSpacing="0" key="tickerTable">
-                <tbody>
-                  <tr className="ticker__row">
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Last updated</th>
-                  </tr>
-                  {
-                    this.props.tickerData.toArray().map((data) => {
-                      return (
-                        <tr className="ticker__row" key={data.get('name')}>
-                          <td>{data.get('name')}</td>
-                          <td style={{ 'backgroundColor': data.get('color') }}>{data.get('price')}</td>
-                          <td>{moment(data.get('lastUpdated')).fromNow()}</td>
-                        </tr>
-                      );
-                    })
-                  }
-                </tbody>
-              </table>,
-              <div className="tickerInfo" key="tickerInfo">
-                <button onClick={this.updateTicker}>Update</button>
-                <div className="tickerInfo__container">
-                  <div className="tickerInfo__update tickerInfo__update--noChange" /> No Change
+            return (
+                <div className="ticker__container">
+                  <table cellPadding="0" cellSpacing="0">
+                    <tbody>
+                    <tr className="ticker__row">
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>Last updated</th>
+                    </tr>
+                    {
+                      this.props.tickerData.toArray().map((data) => {
+                        return (
+                            <tr className="ticker__row" key={data.get('name')}>
+                              <td>{data.get('name')}</td>
+                              <td style={{ 'backgroundColor': data.get('backgroundColor'), 'color': data.get('color') }}>
+                                {data.get('price')}
+                              </td>
+                              <td>{moment(data.get('lastUpdated')).fromNow()}</td>
+                            </tr>
+                        );
+                      })
+                    }
+                    </tbody>
+                  </table>
+                  <div className="tickerInfo">
+                    <div className="tickerInfo__container">
+                      <div className="tickerInfo__update tickerInfo__update--noChange" /> No Change
+                    </div>
+                    <div className="tickerInfo__container">
+                      <div className="tickerInfo__update tickerInfo__update--up" /> Increase
+                    </div>
+                    <div className="tickerInfo__container">
+                      <div className="tickerInfo__update tickerInfo__update--down" /> Decrease
+                    </div>
+                  </div>
                 </div>
-                <div className="tickerInfo__container">
-                  <div className="tickerInfo__update tickerInfo__update--up" /> Increase
-                </div>
-                <div className="tickerInfo__container">
-                  <div className="tickerInfo__update tickerInfo__update--down" /> Decrease
-                </div>
-              </div>
-            ]);
+            );
           }
         })()}
       </div>
