@@ -1,0 +1,57 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+.ticker {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+  .ticker .ticker__row th, .ticker .ticker__row td {
+    font-size: 12px;
+    text-transform: uppercase;
+    border: 1px solid #F6F6F6;
+    width: 160px;
+    padding: 12px 12px 12px 20px;
+    color: rgba(34, 35, 38, 0.9);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: left; }
+  .ticker .ticker__row th {
+    font-weight: bold; }
+  .ticker .tickerInfo {
+    margin: 16px; }
+    .ticker .tickerInfo button {
+      width: 100px;
+      border-radius: 2px;
+      padding: 8px;
+      color: white;
+      font-size: 14px;
+      background-color: #55ACEF;
+      border: none;
+      cursor: pointer; }
+      .ticker .tickerInfo button:hover {
+        opacity: 0.9; }
+      .ticker .tickerInfo button:active {
+        outline: none; }
+    .ticker .tickerInfo .tickerInfo__container {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
+      font-size: 14px; }
+      .ticker .tickerInfo .tickerInfo__container .tickerInfo__update {
+        width: 20px;
+        height: 20px;
+        margin: 8px;
+        border: 1px solid #F6F6F6; }
+        .ticker .tickerInfo .tickerInfo__container .tickerInfo__update--noChange {
+          background-color: #e0d9d9; }
+        .ticker .tickerInfo .tickerInfo__container .tickerInfo__update--up {
+          background-color: #96bf48; }
+        .ticker .tickerInfo .tickerInfo__container .tickerInfo__update--down {
+          background-color: #cd201f; }
+
+/*# sourceMappingURL=bundle.css.map*/
