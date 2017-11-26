@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4624d7d322760ae66b13"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7e3ff9df89559c844601"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -21853,8 +21853,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var socket = (0, _configureSocket2.default)();
 var store = (0, _configureStore2.default)(socket);
-// Process message queue
-(0, _messageHandler.listenAndProcessMessageQueue)(socket, store);
+(0, _messageHandler.listenAndProcessTickerQueue)(socket, store);
 
 (0, _reactDom.render)(_react2.default.createElement(
   _reactRedux.Provider,
@@ -41059,6 +41058,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var showTickerRow = true;
+
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
@@ -41073,106 +41074,127 @@ var App = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.getRandomInt = function (min, max) {
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.getRandomTickerValue = function (min, max) {
       return Math.random() * (max - min) + min;
     }, _this.updateTicker = function () {
-      var data = [['shld', _this.getRandomInt(100.44, 200.56)], ['yhoo', _this.getRandomInt(10.56, 50.33)], ['evi', _this.getRandomInt(10.78, 100.23)]];
+      var data = [['shld', _this.getRandomTickerValue(100.44, 200.56)], ['yhoo', _this.getRandomTickerValue(10.56, 50.33)], ['evi', _this.getRandomTickerValue(10.78, 100.23)], ['aks', _this.getRandomTickerValue(10.78, 100.23)], ['ebr', 138.1275844301807], ['intc', _this.getRandomTickerValue(10.56, 150.33)], ['tck', _this.getRandomTickerValue(10.56, 170.33)]];
 
+      if (showTickerRow) {
+        data.push(['MSFT', _this.getRandomTickerValue(10.78, 100.23)]);
+      }
+      showTickerRow = false;
       _this.props.actions.fetchTickerData(data);
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
   _createClass(App, [{
-    key: 'componentWillMount',
-    value: function componentWillMount() {
-      var data = [['shld', 115.48604266229276], ['yhoo', 18.827506511543984], ['evi', 34.093290276385595], ['msft', 134.7039343700621]];
-      // TODO REMOVE THIS WHEN SOCKET IS DONE
-      this.props.actions.fetchTickerData(data);
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var intervalSeconds = parseInt(this.getRandomTickerValue(1000, 2000));
+      this.interval = setInterval(function () {
+        _this2.updateTicker();
+      }, intervalSeconds);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      clearInterval(this.interval);
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _react2.default.createElement(
         'div',
         { className: 'ticker' },
+        _react2.default.createElement(
+          'div',
+          { className: 'ticker__header' },
+          _react2.default.createElement(
+            'div',
+            { className: 'ticker__header__name' },
+            'Live Stocks Demo'
+          )
+        ),
         function () {
-          if (_this2.props.tickerData) {
-            return [_react2.default.createElement(
-              'table',
-              { cellPadding: '0', cellSpacing: '0', key: 'tickerTable' },
-              _react2.default.createElement(
-                'tbody',
-                null,
-                _react2.default.createElement(
-                  'tr',
-                  { className: 'ticker__row' },
-                  _react2.default.createElement(
-                    'th',
-                    null,
-                    'Name'
-                  ),
-                  _react2.default.createElement(
-                    'th',
-                    null,
-                    'Price'
-                  ),
-                  _react2.default.createElement(
-                    'th',
-                    null,
-                    'Last updated'
-                  )
-                ),
-                _this2.props.tickerData.toArray().map(function (data) {
-                  return _react2.default.createElement(
-                    'tr',
-                    { className: 'ticker__row', key: data.get('name') },
-                    _react2.default.createElement(
-                      'td',
-                      null,
-                      data.get('name')
-                    ),
-                    _react2.default.createElement(
-                      'td',
-                      { style: { 'backgroundColor': data.get('color') } },
-                      data.get('price')
-                    ),
-                    _react2.default.createElement(
-                      'td',
-                      null,
-                      (0, _moment2.default)(data.get('lastUpdated')).fromNow()
-                    )
-                  );
-                })
-              )
-            ), _react2.default.createElement(
+          if (_this3.props.tickerData) {
+            return _react2.default.createElement(
               'div',
-              { className: 'tickerInfo', key: 'tickerInfo' },
+              { className: 'ticker__container' },
               _react2.default.createElement(
-                'button',
-                { onClick: _this2.updateTicker },
-                'Update'
+                'table',
+                { cellPadding: '0', cellSpacing: '0' },
+                _react2.default.createElement(
+                  'tbody',
+                  null,
+                  _react2.default.createElement(
+                    'tr',
+                    { className: 'ticker__row' },
+                    _react2.default.createElement(
+                      'th',
+                      null,
+                      'Name'
+                    ),
+                    _react2.default.createElement(
+                      'th',
+                      null,
+                      'Price'
+                    ),
+                    _react2.default.createElement(
+                      'th',
+                      null,
+                      'Last updated'
+                    )
+                  ),
+                  _this3.props.tickerData.toArray().map(function (data) {
+                    return _react2.default.createElement(
+                      'tr',
+                      { className: 'ticker__row', key: data.get('name') },
+                      _react2.default.createElement(
+                        'td',
+                        null,
+                        data.get('name')
+                      ),
+                      _react2.default.createElement(
+                        'td',
+                        { style: { 'backgroundColor': data.get('backgroundColor'), 'color': data.get('color') } },
+                        data.get('price')
+                      ),
+                      _react2.default.createElement(
+                        'td',
+                        null,
+                        (0, _moment2.default)(data.get('lastUpdated')).fromNow()
+                      )
+                    );
+                  })
+                )
               ),
               _react2.default.createElement(
                 'div',
-                { className: 'tickerInfo__container' },
-                _react2.default.createElement('div', { className: 'tickerInfo__update tickerInfo__update--noChange' }),
-                ' No Change'
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'tickerInfo__container' },
-                _react2.default.createElement('div', { className: 'tickerInfo__update tickerInfo__update--up' }),
-                ' Increase'
-              ),
-              _react2.default.createElement(
-                'div',
-                { className: 'tickerInfo__container' },
-                _react2.default.createElement('div', { className: 'tickerInfo__update tickerInfo__update--down' }),
-                ' Decrease'
+                { className: 'tickerInfo' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'tickerInfo__container' },
+                  _react2.default.createElement('div', { className: 'tickerInfo__update tickerInfo__update--noChange' }),
+                  ' No Change'
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'tickerInfo__container' },
+                  _react2.default.createElement('div', { className: 'tickerInfo__update tickerInfo__update--up' }),
+                  ' Increase'
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'tickerInfo__container' },
+                  _react2.default.createElement('div', { className: 'tickerInfo__update tickerInfo__update--down' }),
+                  ' Decrease'
+                )
               )
-            )];
+            );
           }
         }()
       );
@@ -49691,16 +49713,21 @@ function normalizerTickerData(initialData, currentData) {
   return currentData.reduce(function (tickerData, account) {
     var name = account[0];
     var price = parseFloat(account[1]).toFixed(2);
-    var color = 'transparent';
+    var backgroundColor = 'transparent';
+    var color = '#000000';
     if (!(0, _isEmpty2.default)(initialData)) {
       var oldPrice = parseFloat(initialData[name].price).toFixed(2);
-      color = oldPrice === price ? '#e0d9d9' : oldPrice > price ? '#cd201f' : '#96bf48';
+      var hasSamePrice = oldPrice === price;
+      var hasPriceDecreased = oldPrice > price;
+      backgroundColor = hasSamePrice ? '#e0d9d9' : hasPriceDecreased ? '#cd201f' : '#96bf48';
+      color = hasSamePrice ? '#000000' : hasPriceDecreased ? '#ffffff' : '#ffffff';
     }
 
     tickerData[account[0]] = {
       name: name,
       price: price,
       color: color,
+      backgroundColor: backgroundColor,
       'lastUpdated': new Date()
     };
 
@@ -49806,7 +49833,7 @@ module.exports = isEmpty
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.listenAndProcessMessageQueue = undefined;
+exports.listenAndProcessTickerQueue = undefined;
 
 var _ActionTypes = __webpack_require__(20);
 
@@ -49814,7 +49841,7 @@ var types = _interopRequireWildcard(_ActionTypes);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var listenAndProcessMessageQueue = exports.listenAndProcessMessageQueue = function listenAndProcessMessageQueue(socket, store) {
+var listenAndProcessTickerQueue = exports.listenAndProcessTickerQueue = function listenAndProcessTickerQueue(socket, store) {
   socket.on('connect', function () {
     // TODO Show Connect Status at the top of the page
     console.log('connect');
