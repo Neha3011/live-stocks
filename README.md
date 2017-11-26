@@ -1,4 +1,4 @@
-# react-proslider
+# Live Stocks
 A ticker component in react
 
 ### Installation
