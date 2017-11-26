@@ -39,7 +39,6 @@ const config = {
   },
   'output': {
     'path': path.resolve(__dirname, './dist'),
-    'publicPath': '/',
     'filename': 'scripts/bundle.js'
   },
   'devServer': {
@@ -50,11 +49,10 @@ const config = {
   },
   'plugins': [
     new HtmlWebpackPlugin({
-      'template': './index.html',
-      'filename': 'index.html'
+      'template': './index.html'
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractTextPlugin('styles/[name].[hash].css')
+    new ExtractTextPlugin('styles/bundle.css')
   ]
 };
 
