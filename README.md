@@ -1,7 +1,8 @@
 # Live Stocks
 This is a single page application in react 16, which shows live stock data in a tabular form.
 Everything is thoroughly tested by writing unit tests using JEST framework. To maintain the code quality, eslint is used.
-Github pages is integrated for automated deployment. You can see the demo at[Demo Link](https://neha3011.github.io/live-stocks/)
+Github pages is integrated for automated deployment. You can see the demo at [Demo Link](https://neha3011.github.io/live-stocks/)
+
 ### Follow steps to run the project
 
 ```sh
@@ -17,7 +18,7 @@ Github pages is integrated for automated deployment. You can see the demo at[Dem
 2) npm run coverage
 ```
 
-![Alt text](/images/covearge.png?raw=true "Code Coverage")
+![alt text](https://github.com/Neha3011/live-stocks/blob/master/images/coverage.png "Code Coverage")
 
 ### To run the linter (airbnb), execute the following command
 
