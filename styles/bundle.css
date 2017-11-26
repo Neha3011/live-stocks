@@ -36,23 +36,26 @@ body {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-justify-content: space-around;
-        -ms-flex-pack: distribute;
-            justify-content: space-around;
-    margin: 40px 130px; }
-    .ticker .ticker__container .ticker__row th, .ticker .ticker__container .ticker__row td {
-      font-size: 12px;
-      border: 1px solid #F6F6F6;
-      width: 160px;
-      padding: 12px 12px 12px 20px;
-      color: rgba(34, 35, 38, 0.9);
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      text-align: left; }
-    .ticker .ticker__container .ticker__row td {
-      font-size: 14px; }
-    .ticker .ticker__container .ticker__row th {
-      font-weight: bold;
-      text-transform: uppercase; }
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: 40px; }
+    .ticker .ticker__container table {
+      border-collapse: collapse; }
+      .ticker .ticker__container table .ticker__row th, .ticker .ticker__container table .ticker__row td {
+        font-size: 12px;
+        border: 1px solid #E6E6E6;
+        width: 160px;
+        padding: 12px 12px 12px 20px;
+        color: rgba(34, 35, 38, 0.9);
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-align: left; }
+      .ticker .ticker__container table .ticker__row td {
+        font-size: 14px; }
+      .ticker .ticker__container table .ticker__row th {
+        font-weight: bold;
+        text-transform: uppercase; }
     .ticker .ticker__container .tickerInfo {
       margin: 16px; }
       .ticker .ticker__container .tickerInfo .tickerInfo__container {
